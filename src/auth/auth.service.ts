@@ -32,4 +32,15 @@ export class AuthService {
         },
         };
     }
+
+    async me(userId: number) {
+        const user = await this.usersService.findOne(userId);
+        if (!user) throw new UnauthorizedException('Usuario no encontrado');
+        return {
+            id: user.id,
+            nombre: user.nombre,
+            email: user.email,
+            rol: user.rol,
+        };
+    }
 }
