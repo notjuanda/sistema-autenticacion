@@ -24,6 +24,13 @@ export class AuthController {
         return { user: result.user, access_token: result.access_token };
     }
 
+    @Post('logout')
+    @ApiOperation({ summary: 'Cerrar sesión y borrar cookie' })
+    async logout(@Res({ passthrough: true }) res: Response) {
+        res.clearCookie('auth_token');
+        return { message: 'Sesión cerrada' };
+    }
+
     @Get('me')
     @UseGuards(AuthGuard('jwt'))
     @ApiOperation({ summary: 'Obtener el usuario autenticado' })
